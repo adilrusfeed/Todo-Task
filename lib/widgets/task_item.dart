@@ -58,7 +58,7 @@ class TaskItemScreen extends StatelessWidget {
             TextButton(
               onPressed: () async {
                 await todoProvider.deleteTodo(task.id!);
-                _cancelNotification(task.id!);
+                // _cancelNotification(task.id!);
                 Navigator.pop(context); // Close the dialog
               },
               child: Text("Yes"),
@@ -88,19 +88,20 @@ class TaskItemScreen extends StatelessWidget {
     const NotificationDetails platformChannelSpecifies =
         NotificationDetails(android: androidPlatformChannelSpecifies);
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        task.id!.hashCode,
-        "Task Deadline Approaching",
-        'The Deadline for "$title" is getting near,Hurry up!',
-        tz.TZDateTime.from(dateTime, tz.local),
-        platformChannelSpecifies,
-        androidAllowWhileIdle: true,
-        // androidAllowWhileIdle: true,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: DateTimeComponents.time);
+      task.id!.hashCode,
+      "Task Deadline Approaching",
+      'The Deadline for "$title" is getting near,Hurry up!',
+      tz.TZDateTime.from(dateTime, tz.local),
+      platformChannelSpecifies,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      // androidAllowWhileIdle: true,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.time,
+    );
   }
 
-  void _cancelNotification(String taskId) async {
-    await flutterLocalNotificationsPlugin.cancel(taskId.hashCode);
-  }
+  // void _cancelNotification(String taskId) async {
+  //   await flutterLocalNotificationsPlugin.cancel(taskId.hashCode);
+  // }
 }
