@@ -1,6 +1,6 @@
 # todotask
 
-A new Flutter project.
+A new Todo App ease your work.
 
 ## Getting Started
 
